@@ -8,7 +8,6 @@ function buscarCep() {
         let reg = /^[0-9]{8}$/
         console.log(reg.test(novoCep))
 
-
         if (reg.test(novoCep)) {
             console.log('passou')
             requestCep(novoCep)
