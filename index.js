@@ -1,10 +1,23 @@
 let cep = document.querySelector('#cep')
 
 function buscarCep() {
-    if (cep.value === '') {
-        console.log('aqui')
+    if (cep.value !== '') {
+
+        let novoCep = cep.value.replace('-', '')
+
+        let reg = /^[0-9]{8}$/
+        console.log(reg.test(novoCep))
+
+
+        if (reg.test(novoCep)) {
+            console.log('passou')
+            requestCep(novoCep)
+        } else {
+            console.log('não passou')
+        }
+
     } else {
-        getCep(cep.value)
+        console.log('aqui')
     }
 }
 
@@ -14,7 +27,7 @@ function limparCep() {
     cep.value = ''
 }
 
-async function getCep(cep) {
+async function requestCep(cep) {
     return await fetch(`https://viacep.com.br/ws/${cep}/json/`)
         .then((data) => data.json())
         .then((json) => {
