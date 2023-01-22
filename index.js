@@ -9,14 +9,14 @@ function buscarCep() {
         console.log(reg.test(novoCep))
 
         if (reg.test(novoCep)) {
-            console.log('passou')
+            console.log('Passou')
             requestCep(novoCep)
         } else {
-            console.log('não passou')
+            console.log('Não passou')
         }
 
     } else {
-        console.log('aqui')
+        console.log('Aqui')
     }
 }
 
@@ -28,7 +28,15 @@ function limparCep() {
 
 async function requestCep(cep) {
     return await fetch(`https://viacep.com.br/ws/${cep}/json/`)
-        .then((data) => data.json())
+        .then((resp) => {
+
+            if (!resp.ok) {
+                throw new Error(`HTTP error: ${resp.status}`);
+            }
+
+            console.log('Resposta http ok', resp.status)
+            return resp.json()
+        })
         .then((json) => {
             for (const key in json) {
                 if (Object.hasOwnProperty.call(json, key)) {
